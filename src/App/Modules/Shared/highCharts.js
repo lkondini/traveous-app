@@ -12,10 +12,16 @@ class HighchartsComp extends React.Component{
 
 
     getMostCitied = () => {
-        const mostCitied = _.maxBy(this.props.list, function(listItem) {
-            return { year : listItem.pubYear, citedByCount: listItem.citedByCount} ;
-        });
-        return mostCitied;
+        let mostCitied = _(this.props.list)
+        .groupBy('pubYear')
+        .mapValues(listItem => ({
+            citiedItem: _.maxBy(listItem, 'citedByCount'),
+            max: _.maxBy(listItem, 'citedByCount').citedByCount,
+        })).value()
+        const citiedList = _.map(mostCitied, (item, prop) => {
+            return { year: prop, maxCount: item.max, title: item.citiedItem.title }
+        })
+        return citiedList;
     }
 
     getSeries = () => {
@@ -37,6 +43,7 @@ class HighchartsComp extends React.Component{
     
 
     render(){
+        const citiedList = this.getMostCitied();
         return(
             <HighchartsReact
                 highcharts={Highcharts}
@@ -46,7 +53,7 @@ class HighchartsComp extends React.Component{
                         animation: false
                     },
                     title: {
-                        text: 'Europe PCM publications based on the year'
+                        text: 'Chart'
                     },
                     series: [{ name: 'Publications',data: this.getSeries()}],
                     xAxis: {
@@ -60,7 +67,13 @@ class HighchartsComp extends React.Component{
                             point: {
                                 events: {
                                     mouseOver: function () {
-                                        var chart = this.series.chart;
+                                        let chart = this.series.chart;
+                                        let bannerText = '';
+                                        _.map(citiedList, (item) => {
+                                            if(item.year === _.toString(this.options.name)){
+                                                bannerText += `${item.title} has been the most citied article for the ${item.year}`
+                                            }
+                                        })
                                         if (!chart.lbl) {
                                             chart.lbl = chart.renderer.label('')
                                                 .attr({
@@ -76,7 +89,7 @@ class HighchartsComp extends React.Component{
                                         chart.lbl
                                             .show()
                                             .attr({
-                                                text: 'x: ' + this.x + ', y: ' + this.y
+                                                text: bannerText
                                             });
                                     }
                                 }

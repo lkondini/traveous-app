@@ -40,7 +40,7 @@ class Home extends React.Component{
     render(){
         return(
             <div className="root__container">
-                <p className="title center padding_10">High Charts</p>
+                <p className="title center padding_10">Europe PCM publications based on the year</p>
                 <div className="flex space-around center padding_10" key={this.state.key}>
                     <Formsy
                         onSubmit={this.onSubmit}
