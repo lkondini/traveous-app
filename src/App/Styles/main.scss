@@ -1,0 +1,32 @@
+
+
+.root__container{
+    margin: 30;
+}
+
+.center{
+    text-align: center;
+}
+
+.flex{
+    display: flex;
+    &.row{
+        flex-direction: row
+    }
+    &.space-around{
+        justify-content: space-around
+    }
+}
+
+.title{
+    font-size: 26px;
+}
+
+.padding_10{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.padding_10{
+    padding: 10px;
+}
