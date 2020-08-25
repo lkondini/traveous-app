@@ -8,7 +8,7 @@
     "@material-ui/pickers": "^3.2.7",
     "date-fns": "^2.0.0-beta.5",
     "formsy-react": "^1.1.5",
-    "highcharts": "^7.2.0",
+    "highcharts": "^7.2.2",
     "highcharts-react-official": "^2.2.2",
     "moment": "^2.24.0",
     "node-sass": "^4.12.0",
